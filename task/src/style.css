@@ -12,7 +12,7 @@
 
 .container{
     position: relative;
-    border-style: solid;
+    /*border-style: solid;*/
     max-width: 780px;
     
     display: flex;
@@ -23,6 +23,8 @@
 }
 
 h1{
+    color: rgb(236, 181, 0);
+    font-weight: bold;
     font-size: 60px;
     text-align: center;
     align-content: center;
@@ -52,8 +54,7 @@ h1{
     transform: rotateY(180deg);
 }
 
-
-.front, .back, .middle{
+.front, .back{
     top: 0;
     position: absolute;
     width: 200px;
@@ -74,16 +75,13 @@ h1{
     z-index: 2;
     background-color: orange;
 }
+
 .back{
     
     z-index: 0;
-    background-color: darkorchid;
+    background-image: linear-gradient(rgb(235, 63, 220),rgb(91, 62, 221));
     transform: rotateY(180deg);
 }
-.middle{
-    z-index: 1;
-}
-
 
 .font{
     font-size: 28px;

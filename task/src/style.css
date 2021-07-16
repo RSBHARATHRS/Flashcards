@@ -1,19 +1,25 @@
 .body{
+    overflow-x: hidden;
+     /* Hide scrollbars */
+    background-size: cover;
     background-repeat: no-repeat;
     background-image: url("Images/world.png");
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 96%;
     /*Flex Properties*/
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-content: center;
     justify-content: center;
 }
 
 .container{
+    left: 5%;
+    right: 5%;
     position: relative;
     /*border-style: solid;*/
-    max-width: 780px;
+    max-width: 90%;
     
     display: flex;
     flex-wrap: wrap;
@@ -23,6 +29,9 @@
 }
 
 h1{
+    stroke: black;
+    stroke-width: 30px;
+    
     color: rgb(236, 181, 0);
     font-weight: bold;
     font-size: 60px;
@@ -50,8 +59,31 @@ h1{
     
 }
 
+h1:hover{
+   
+   animation-name: smooth;
+   animation-duration: 3s;
+}
+
+@keyframes smooth {
+    from{
+        font-size: 60px;
+    }to{
+        font-size: 80px;
+    }
+    /* 25%{
+        font-size: 65px;
+    }
+    50%{
+        font-size: 70px;
+    }
+    75%{
+        font-size: 75px;
+    } */
+}
 .card:hover{
     transform: rotateY(180deg);
+    
 }
 
 .front, .back{

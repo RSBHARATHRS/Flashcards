@@ -11,7 +11,7 @@ async function stageTest() {
     const browser = await puppeteer.launch({
         headless: false,
         defaultViewport: null,
-        args: ['--start-maximized']
+        args:['--start-maximized']
     });
 
     const page = await browser.newPage();
@@ -36,7 +36,7 @@ async function stageTest() {
             if (!h1[0].innerText) return hs.wrong("The h1 element should contain text.");
 
             let font = window.getComputedStyle(h1[0]).fontFamily;
-            if (font === '"serif"' || font === '"Times New Roman"') return hs.wrong("The text inside the h1 element should have a font different from 'serif' and 'Times New Roman'.");
+            if (font === '"serif"' || font === '"Times New Roman"') return  hs.wrong("The text inside the h1 element should have a font different from 'serif' and 'Times New Roman'.");
 
             return hs.correct()
         },
@@ -81,34 +81,34 @@ async function stageTest() {
         },
         //#test3
         /*
-        2 correct cases
-        *In both cases test tries to find property font on different levels
-        1.
-        1) Finds element with 9 divs
-        2) Checks if it(or each of cards) has CSS property font !== serif | Times New Roman
-        2.
-        1) Finds element with 3 divs, each of 3 divs contains 3 divs inside
-        2) Checks if it(or each of its children or each of cards) has CSS property font !== serif | Times New Roman
+        1)Checks if all text on the cards in p element
+        2)Checks if it has font !== serif | Times New Roman
         */
         () => {
             let divs = document.body.getElementsByTagName("div");
             let k = 0;
             for (let div of divs) {
                 if (div.children.length === 9) {
-                    const font = window.getComputedStyle(div).font
-                    if (font !== '"serif"' || font !== '"Times New Roman"') {
-                        return hs.correct();
-                    }
                     for (let card of Array.from(div.children)) {
-                        if (card.children[0] && card.children[0].tagName.toLowerCase() === 'p') {
-                            let font = window.getComputedStyle(div.children[0]).fontFamily;
-                            if (font === '"serif"' || font === '"Times New Roman"') {
-                                return hs.wrong("Text on cards should have font different from 'serif' and 'Times New Roman'");
+                        if (card.children[0] && card.children[0].tagName.toLowerCase() === 'div') {
+                            if (card.children[0].children.length === 2) {
+                                for (let sideDir of card.children[0].children) {
+                                    if (sideDir.children[0] && sideDir.children[0].tagName && sideDir.children[0].tagName.toLowerCase() === 'p') {
+                                        let font = window.getComputedStyle(sideDir.children[0]).fontFamily;
+                                        if (font === '"serif"' || font === '"Times New Roman"') {
+                                            return hs.wrong("Text on cards should have font different from 'serif' and 'Times New Roman'");
+                                        } else {
+                                            k++;
+                                        }
+                                    } else {
+                                        return hs.wrong("All text on the cards should be in 'p' element");
+                                    }
+                                }
                             } else {
-                                k++;
+                                return hs.wrong("Each card should have suggested structure - there should be 4 divs for each card.");
                             }
                         } else {
-                            return hs.wrong("The structure should be the same as given in the step and all text on the cards should be in 'p' element");
+                            return hs.wrong("Each card should have suggested structure - there should be 4 divs for each card.");
                         }
                     }
                 } else if (div.children && div.children.length === 3 &&
@@ -123,11 +123,25 @@ async function stageTest() {
                             return hs.correct();
                         }
                         for (let card of divBlockOfThree.children) {
-                            const font = window.getComputedStyle(card).font;
-                            if (font !== '"serif"' || font !== '"Times New Roman"') {
-                                k++;
+                            if (card.children[0] && card.children[0].tagName.toLowerCase() === 'div') {
+                                if (card.children[0].children.length === 2) {
+                                    for (let sideDir of card.children[0].children) {
+                                        if (sideDir.children[0] && sideDir.children[0].tagName && sideDir.children[0].tagName.toLowerCase() === 'p') {
+                                            let font = window.getComputedStyle(sideDir.children[0]).fontFamily;
+                                            if (font === '"serif"' || font === '"Times New Roman"') {
+                                                return hs.wrong("Text on cards should have font different from 'serif' and 'Times New Roman'");
+                                            } else {
+                                                k++;
+                                            }
+                                        } else {
+                                            return hs.wrong("All text on the cards should be in 'p' element");
+                                        }
+                                    }
+                                } else {
+                                    return hs.wrong("Each card should have suggested structure - there should be 4 divs for each card.");
+                                }
                             } else {
-                                return hs.wrong("Text on cards should have font different from 'serif' and 'Times New Roman'");
+                                return hs.wrong("Each card should have suggested structure - there should be 4 divs for each card.");
                             }
                         }
 
@@ -135,8 +149,7 @@ async function stageTest() {
                 }
             }
 
-
-            return k !== 9 ? hs.wrong("9 div elements should contain p element.") : hs.correct();
+            return k !== 18 ? hs.wrong("There should be 2 p elements for each of the cards") : hs.correct();
         },
         //#test4
         /*
@@ -222,7 +235,6 @@ async function stageTest() {
     await browser.close();
     return result;
 }
-
 jest.setTimeout(30000);
 test("Test stage", async () => {
         let result = await stageTest();

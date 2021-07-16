@@ -263,6 +263,16 @@ files:
         }
     );
   learner_created: false
+- name: src/style.css
+  visible: true
+  learner_created: true
+- name: src/Images/world.png
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/115/stages/627/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: Fri, 16 Jul 2021 04:16:28 UTC
 record: -1

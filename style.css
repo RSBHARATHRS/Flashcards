@@ -15,12 +15,11 @@
 }
 
 .container{
-    left: 5%;
-    right: 5%;
+    margin: 0 auto;
     position: relative;
     /*border-style: solid;*/
-    max-width: 90%;
-    
+  
+    width: 50%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
